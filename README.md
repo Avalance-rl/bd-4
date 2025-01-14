@@ -1,5 +1,8 @@
-Чтобы запустить: make launch-project
+Запуск:
 
+```bash
+make launch-project
+```
 
 # Работа с миграциями
 
