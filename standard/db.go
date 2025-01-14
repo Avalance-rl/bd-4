@@ -14,11 +14,11 @@ type Storage struct {
 }
 
 type PGX struct {
-    pool *pgxpool.Pool
+	pool *pgxpool.Pool
 }
 
 func InitDB(opts string) *Storage {
-	db, err := sql.Open("postgres", opts)
+	db, err := sql.Open("pgx", opts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,21 +27,21 @@ func InitDB(opts string) *Storage {
 }
 
 func InitDBWithPool(opts string, maxConns int32) *PGX {
-    config, err := pgxpool.ParseConfig(opts)
+	config, err := pgxpool.ParseConfig(opts)
 	if err != nil {
-        log.Fatal(err)
+		log.Fatal(err)
 	}
 	config.MaxConns = maxConns
 
 	db, err := pgxpool.NewWithConfig(context.Background(), config)
 	if err != nil {
-        log.Fatal(err)
+		log.Fatal(err)
 	}
 	if err = db.Ping(context.Background()); err != nil {
-        log.Fatal(err)
+		log.Fatal(err)
 	}
 
-	return &PGX{db} 
+	return &PGX{db}
 }
 
 func (s *Storage) InsertProduct(p *Product) error {
@@ -84,9 +84,13 @@ func (s *Storage) GetProduct(id string) (*Product, error) {
 	}
 
 	var product Product
-	err := s.db.QueryRow("SELECT * FROM products WHERE id = $1", id).Scan(&product)
+	err := s.db.QueryRow("SELECT id, price, title, description FROM products WHERE id = $1", id).Scan(
+		&product.ID,
+		&product.Price,
+		&product.Title,
+		&product.Description)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	return &product, nil
