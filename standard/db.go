@@ -14,7 +14,7 @@ type Storage struct {
 }
 
 type PGX struct {
-    poll *pgxpool.Pool
+    pool *pgxpool.Pool
 }
 
 func InitDB(opts string) *Storage {
