@@ -17,7 +17,6 @@ type Product struct {
 
 func InitDB(opts string) {
 	db, err := gorm.Open(postgres.Open(opts), &gorm.Config{})
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,5 +34,4 @@ func InitDB(opts string) {
 	db.Model(&product).Update("Price", 200)
 
 	db.Delete(&product, 1)
-
 }

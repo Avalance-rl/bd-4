@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	//opts = "postgres://user:qwerqwer@localhost:9001/db?sslmode=disable"
+	// opts = "postgres://user:qwerqwer@localhost:9001/db?sslmode=disable"
 	opts = "host=localhost port=9001 user=user password=qwerqwer dbname=db sslmode=disable"
 )
 
@@ -34,7 +34,6 @@ func Test_InitDBWithPool(t *testing.T) {
 	pgx := InitDBWithPool(opts, 10)
 
 	t.Log("pgx.Stat", pgx.pool.Stat())
-
 }
 
 func Test_InsertProduct(t *testing.T) {
@@ -95,7 +94,6 @@ func Test_GetProduct(t *testing.T) {
 	product, err := storage.GetProduct(ID)
 	assert.NoError(t, err)
 	assert.Equal(t, p.Price, product.Price)
-
 }
 
 func Test_UpdateProduct(t *testing.T) {
@@ -139,7 +137,6 @@ func Test_UpdateProduct(t *testing.T) {
 	assert.Equal(t, updateP.Price, product.Price)
 	assert.Equal(t, updateP.Description, product.Description)
 	assert.Equal(t, updateP.Title, product.Title)
-
 }
 
 func Test_InsertProducts(t *testing.T) {
