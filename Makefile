@@ -2,7 +2,7 @@ launch-project:
 	docker-compose -f docker-compose.yml build
 	docker-compose -f docker-compose.yml up -d
 	make migrate-up
-	go test ./...
+	go test ./... -v
 migrate-new:
 	migrate create -ext sql -dir migrations -seq ${NAME}
 .PHONY:migrate-new
